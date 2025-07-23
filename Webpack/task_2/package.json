@@ -11,11 +11,11 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "css-loader": "^6.8.1",
+    "css-loader": "^7.1.2",
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^8.1.0",
-    "style-loader": "^3.3.4"
+    "style-loader": "^4.0.0",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1"
   }
 }
