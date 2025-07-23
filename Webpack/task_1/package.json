@@ -1,0 +1,17 @@
+{
+  "name": "webpack-task-1",
+  "version": "1.0.0",
+  "description": "Webpack config with jQuery and Lodash for Holberton Dashboard",
+  "main": "dashboard_main.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "jquery": "^3.7.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
