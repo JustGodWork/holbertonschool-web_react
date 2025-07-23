@@ -1,0 +1,9 @@
+button {
+  margin-right: 10px;
+}
+#count {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: middle;
+}
