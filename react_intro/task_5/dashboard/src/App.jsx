@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import logo from './assets/holberton-logo.jpg';
-import Notifications from './Notifications';
-import { getCurrentYear, getFooterCopy } from './utils';
+import Notifications from './Notifications/Notifications';
+import { getCurrentYear, getFooterCopy } from './utils/utils';
 
 function App() {
   return (
