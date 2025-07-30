@@ -21,4 +21,27 @@ describe('App', () => {
     const logo = screen.getByAltText(/holberton logo/i);
     expect(logo).toBeInTheDocument();
   });
+
+  test('renders 2 input elements', () => {
+    render(<App />);
+    const inputs = screen.getAllByRole('textbox');
+    // Email input is type="email", password input is type="password" (not textbox role)
+    // So we check for both textbox and password input
+    const passwordInputs = screen.getAllByLabelText(/password/i);
+    expect(inputs.length + passwordInputs.length).toBe(2);
+  });
+
+  test('renders 2 label elements with text Email and Password', () => {
+    render(<App />);
+    const emailLabel = screen.getByLabelText(/email/i);
+    const passwordLabel = screen.getByLabelText(/password/i);
+    expect(emailLabel).toBeInTheDocument();
+    expect(passwordLabel).toBeInTheDocument();
+  });
+
+  test('renders a button with text OK', () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: /ok/i });
+    expect(button).toBeInTheDocument();
+  });
 });
