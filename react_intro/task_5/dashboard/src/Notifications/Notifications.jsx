@@ -1,33 +1,34 @@
-import React from 'react';
-import './Notifications.css';
-import closeIcon from '../assets/close-button.png';
-import { getLatestNotification } from '../utils/utils';
+import './Notifications.css'
+import closeButton from "../assets/close-button.png";
+import { getLatestNotification } from "../utils/utils";
 
 function Notifications() {
-  return (
-    <div className="notifications">
-      <button
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-        aria-label="Close"
-        onClick={() => console.log('close button has been clicked')}
-      >
-        <img src={closeIcon} alt="close icon" style={{ width: 15, height: 15 }} />
-      </button>
-      <p>Here is the list of notifications</p>
-      <ul>
-        <li data-priority="default">New course available</li>
-        <li data-priority="urgent">New resume available</li>
-        <li dangerouslySetInnerHTML={{ __html: getLatestNotification() }} />
-      </ul>
-    </div>
-  );
+    return (
+        <div className="notifications">
+            <p>Here is the list of notifications</p>
+
+            <button
+                style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    right: '1rem',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer'
+                }}
+                aria-label="Close"
+                onClick={() => console.log('close button has been clicked')}
+            >
+                <img src={closeButton} alt="close" style={{ width: '15px', height: '15px' }} />
+            </button>
+
+            <ul>
+                <li data-priority="default" >New course available</li>
+                <li data-priority="urgent" >New resume available</li>
+                <li dangerouslySetInnerHTML={{ __html: getLatestNotification() }}></li>
+            </ul>
+        </div>
+    )
 }
 
-export default Notifications;
+export default Notifications

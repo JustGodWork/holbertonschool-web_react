@@ -1,34 +1,40 @@
-import React from 'react';
-import './App.css';
-import logo from '../assets/holberton-logo.jpg';
+import holbertonLogo from '../assets/holberton-logo.jpg'
+import '../App/App.css'
+import { getCurrentYear, getFooterCopy } from '../utils/utils'
 import Notifications from '../Notifications/Notifications';
-import { getCurrentYear, getFooterCopy } from '../utils/utils';
 
 function App() {
+
   return (
-    <div>
-      <div className="root-notifications">
+    <>
+      <div className='root-notifications'>
         <Notifications />
       </div>
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="holberton-logo" />
-        <h1>School dashboard</h1>
+
+      <div className='App-header'>
+        <img className='holberton-logo' src={holbertonLogo} alt='holberton logo' />
+        <h1>School Dashboard</h1>
       </div>
-      <div className="App-body">
+
+      <div className='App-body'>
         <p>Login to access the full dashboard</p>
+
         <form>
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" />
-          <label htmlFor="password" style={{ marginLeft: '10px' }}>Password:</label>
-          <input type="password" id="password" name="password" />
-          <button type="submit" style={{ marginLeft: '10px' }}>OK</button>
+          <label htmlFor='email'>Email:</label>
+          <input id='email' name='email' type='email' />
+
+          <label htmlFor='password'>Password:</label>
+          <input id='password' name='password' type='password' />
+
+          <button type='submit'>OK</button>
         </form>
       </div>
-      <div className="App-footer">
-        <p>{getFooterCopy(true)} - {getCurrentYear()}</p>
+
+      <div className='App-footer'>
+        <p>Copyright {getCurrentYear()} - {getFooterCopy()}</p>
       </div>
-    </div>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App

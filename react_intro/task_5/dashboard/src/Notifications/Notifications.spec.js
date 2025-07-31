@@ -1,30 +1,41 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Notifications from './Notifications';
+import Notifications from '../Notifications/Notifications';
 
-describe('Notifications', () => {
-  test('renders the notifications title', () => {
+test('Renders the notifications title', () => {
     render(<Notifications />);
-    expect(screen.getByText(/here is the list of notifications/i)).toBeInTheDocument();
-  });
 
-  test('renders the close button', () => {
-    render(<Notifications />);
-    const button = screen.getByRole('button', { name: /close/i });
-    expect(button).toBeInTheDocument();
-  });
+    const titleElement = screen.getByText(/here is the list of notifications/i);
 
-  test('renders 3 li elements as notifications', () => {
-    render(<Notifications />);
-    const items = screen.getAllByRole('listitem');
-    expect(items.length).toBe(3);
-  });
+    expect(titleElement).toBeInTheDocument();
+});
 
-  test('clicking the close button logs to the console', () => {
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+test('Renders the close button', () => {
     render(<Notifications />);
-    const button = screen.getByRole('button', { name: /close/i });
-    fireEvent.click(button);
-    expect(logSpy).toHaveBeenCalledWith('Close button has been clicked');
-    logSpy.mockRestore();
-  });
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+
+    expect(closeButton).toBeInTheDocument();
+});
+
+test('Renders three list items', () => {
+    render(<Notifications />);
+
+    const listItems = screen.getAllByRole('listitem');
+
+    expect(listItems).toHaveLength(3);
+});
+
+test('Logs message when close button is clicked', () => {
+    const consoleLog = jest.spyOn(console, 'log').mockImplementation();
+
+    render(<Notifications />);
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+
+    fireEvent.click(closeButton);
+
+    expect(consoleLog).toHaveBeenCalledWith('close button has been clicked');
+
+    consoleLog.mockRestore();
+
 });
