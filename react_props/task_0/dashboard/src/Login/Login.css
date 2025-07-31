@@ -1,0 +1,32 @@
+.App-body {
+  padding: 40px 30px;
+  min-height: 200px;
+}
+
+.App-body p {
+  font-size: 1.2rem;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  margin-left: 5px;
+  margin-right: 10px;
+  padding: 3px 6px;
+}
+
+button {
+  padding: 3px 12px;
+  background: #e1003c;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
