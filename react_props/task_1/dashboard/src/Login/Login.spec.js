@@ -1,22 +1,23 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import Login from './Login';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-describe('Login component', () => {
-  test('renders 2 labels, 2 inputs, and 1 button', () => {
-    render(<Login />);
-    const labels = screen.getAllByLabelText(/email|password/i);
-    const inputs = screen.getAllByRole('textbox');
-    const passwordInputs = screen.getAllByLabelText(/password/i);
-    const button = screen.getByRole('button', { name: /ok/i });
-    expect(labels.length).toBe(2);
-    expect(inputs.length + passwordInputs.length).toBe(2);
-    expect(button).toBeInTheDocument();
-  });
+test('renders 2 labels, 2 inputs and 1 button', () => {
+  const { container } = render(<Login />);
+  const labels = container.querySelectorAll('label');
+  const inputs = container.querySelectorAll('input');
+  expect(labels.length).toBe(2);
+  expect(inputs.length).toBe(2);
+  expect(screen.getByRole('button', { name: /ok/i })).toBeInTheDocument();
+});
 
-  test('focuses input when label is clicked', () => {
-    render(<Login />);
-    const emailInput = screen.getByRole('textbox');
-    fireEvent.click(screen.getByText(/email/i));
-    expect(emailInput).toHaveFocus();
-  });
+test('focuses the input when its label is clicked', async () => {
+  const { container } = render(<Login />);
+  const user = userEvent.setup();
+
+  const emailLabel = container.querySelector('label[for="email"]');
+  const emailInput = screen.getByLabelText(/email/i);
+
+  await user.click(emailLabel);
+  expect(emailInput).toHaveFocus();
 });

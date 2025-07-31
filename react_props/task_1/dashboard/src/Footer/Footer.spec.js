@@ -1,12 +1,17 @@
+import App from '../App/App';
 import { render, screen } from '@testing-library/react';
-import Footer from './Footer';
-import { getCurrentYear, getFooterCopy } from '../utils/utils';
 
-describe('Footer component', () => {
-  test('renders the copyright string', () => {
-    render(<Footer />);
-    const year = getCurrentYear();
-    const text = `${getFooterCopy(true)} - ${year}`;
-    expect(screen.getByText(text)).toBeInTheDocument();
-  });
+test('Renders correct text content in p elements', () => {
+  render(<App />);
+
+  const bodyParagraph = screen.getByText(/login to access the full dashboard/i);
+
+  expect(bodyParagraph).toBeInTheDocument();
+
+  const currentYear = new Date().getFullYear();
+  const footerParagraph = screen.getByText(
+    new RegExp(`copyright ${currentYear} - holberton school`, 'i')
+  );
+
+  expect(footerParagraph).toBeInTheDocument();
 });

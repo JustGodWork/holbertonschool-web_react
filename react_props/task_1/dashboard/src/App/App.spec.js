@@ -1,94 +1,34 @@
+import App from './App.jsx'
 import { render, screen } from '@testing-library/react';
-import App from '../App/App.jsx';
 
-test('Renders h1 element with "School Dashboard text"', () => {
+test('Renders Notifications component', () => {
     render(<App />);
 
-    const headingElement = screen.getByRole('heading', {
-        name: /school dashboard/i
-    });
+    const notification = screen.getByText(/notifications/i);
 
-    expect(headingElement).toBeInTheDocument();
+    expect(notification).toBeInTheDocument();
 });
 
-test('Renders correct text content in p elements', () => {
+test('Renders Header component', () => {
     render(<App />);
 
-    const bodyParagraph = screen.getByText(/login to access the full dashboard/i);
+    const header = screen.getByText(/school dashboard/i);
 
-    expect(bodyParagraph).toBeInTheDocument();
-
-    const currentYear = new Date().getFullYear();
-    const footerParagraph = screen.getByText(
-        new RegExp(`copyright ${currentYear} - holberton school`, 'i')
-    );
-
-    expect(footerParagraph).toBeInTheDocument();
+    expect(header).toBeInTheDocument();
 });
 
-test('renders img element', () => {
+test('Renders Login component', () => {
     render(<App />);
 
-    const imgElement = screen.getByAltText(/holberton logo/i);
+    const loginText = screen.getByText(/login to access the full dashboard/i);
 
-    expect(imgElement).toBeInTheDocument();
+    expect(loginText).toBeInTheDocument();
 });
 
-test('Render 2 input elements', () => {
-    render(<App />)
-
-    const emailInput = screen.getByRole('textbox');
-    const passwordInput = screen.getByLabelText(/Password/i);
-
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-});
-
-test('Render 2 label elements with the text "Email:" and "Password:"', () => {
+test('Renders Footer component', () => {
     render(<App />);
 
-    const emailLabel = screen.getByText(/email:/i);
-    const passwordLabel = screen.getByText(/password:/i);
+    const footer = screen.getByText(/copyright/i);
 
-    expect(emailLabel).toBeInTheDocument();
-    expect(passwordLabel).toBeInTheDocument();
-});
-
-test('Render a button with the text "OK"', () => {
-    render(<App />);
-
-    const button = screen.getByRole('button', { name: /ok/i });
-
-    expect(button).toBeInTheDocument();
-});
-
-test('renders Header component', () => {
-    render(<App />);
-    const logo = screen.getByAltText(/holberton logo/i);
-    const heading = screen.getByRole('heading', { name: /school dashboard/i });
-    expect(logo).toBeInTheDocument();
-    expect(heading).toBeInTheDocument();
-});
-
-test('renders Login component', () => {
-    render(<App />);
-    const emailInput = screen.getByRole('textbox');
-    const passwordInput = screen.getByLabelText(/password/i);
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-});
-
-test('renders Footer component', () => {
-    render(<App />);
-    const currentYear = new Date().getFullYear();
-    const footerParagraph = screen.getByText(
-        new RegExp(`copyright ${currentYear} - holberton school`, 'i')
-    );
-    expect(footerParagraph).toBeInTheDocument();
-});
-
-test('renders Notifications component', () => {
-    render(<App />);
-    const notifTitle = screen.getByText(/here is the list of notifications/i);
-    expect(notifTitle).toBeInTheDocument();
+    expect(footer).toBeInTheDocument();
 });
