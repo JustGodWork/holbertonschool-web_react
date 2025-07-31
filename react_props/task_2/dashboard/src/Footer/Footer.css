@@ -1,0 +1,15 @@
+.App-footer {
+  width: 100%;
+  border-top: 3px solid #e1003c;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  padding: 15px 0;
+}
+
+.App-footer p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
