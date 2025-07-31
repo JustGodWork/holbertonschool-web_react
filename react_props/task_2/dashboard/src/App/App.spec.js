@@ -29,6 +29,13 @@ test('Renders Footer component', () => {
     render(<App />);
 
     const footer = screen.getByText(/copyright/i);
-
+    
     expect(footer).toBeInTheDocument();
 });
+
+
+
+
+
+
+
