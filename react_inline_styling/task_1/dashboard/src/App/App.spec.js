@@ -1,6 +1,10 @@
 import React from 'react';
 import App from './App.jsx'
 import { render, screen } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
+
+beforeAll(() => StyleSheetTestUtils.suppressStyleInjection());
+afterAll(() => StyleSheetTestUtils.clearBufferAndResumeStyleInjection());
 
 test('Renders Notifications component', () => {
     render(<App />);

@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Notifications from './Notifications';
 import { getLatestNotification } from "../utils/utils";
+import { StyleSheetTestUtils } from 'aphrodite';
 
 const mockNotifications = [
     {
@@ -20,6 +21,9 @@ const mockNotifications = [
         value: getLatestNotification()
     }
 ];
+
+beforeAll(() => StyleSheetTestUtils.suppressStyleInjection());
+afterAll(() => StyleSheetTestUtils.clearBufferAndResumeStyleInjection());
 
 test('Renders 3 notification items with appropriate text', () => {
     const { getByText, container } = render(
@@ -118,3 +122,5 @@ describe('Notifications pure component', () => {
         expect(screen.getAllByRole('listitem').length).toBe(3);
       });
 });
+
+// Color/style tests commented out due to Aphrodite

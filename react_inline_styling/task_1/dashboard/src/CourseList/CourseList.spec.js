@@ -1,6 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
 import CourseList from './CourseList';
+
+beforeAll(() => StyleSheetTestUtils.suppressStyleInjection());
+afterAll(() => StyleSheetTestUtils.clearBufferAndResumeStyleInjection());
 
 test('renders 5 different rows when it receives an array of courses objects', () => {
     const courses = [
@@ -23,3 +27,5 @@ test('renders 1 row whenever it receives an empty array', () => {
 
     expect(container).toHaveTextContent('No course available yet');
 });
+
+// Color/style tests commented out due to Aphrodite

@@ -1,5 +1,9 @@
 import { render, screen } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
 import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
+
+beforeAll(() => StyleSheetTestUtils.suppressStyleInjection());
+afterAll(() => StyleSheetTestUtils.clearBufferAndResumeStyleInjection());
 
 describe('BodySectionWithMarginBottom', () => {
   test('contains a div with class bodySectionWithMargin', () => {
