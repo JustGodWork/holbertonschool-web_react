@@ -94,3 +94,27 @@ test('logs correct message when notification item is clicked', () => {
     expect(logSpy).toHaveBeenCalledWith('Notification 2 has been marked as read');
     logSpy.mockRestore();
   });
+
+describe('Notifications pure component', () => {
+    test('does not re-render if notifications length stays the same', () => {
+        const initial = [
+          { id: 1, type: 'default', value: 'Test 1' },
+          { id: 2, type: 'urgent', value: 'Test 2' },
+        ];
+        const { rerender } = render(<Notifications notifications={initial} />);
+        expect(screen.getAllByRole('listitem').length).toBe(2);
+        rerender(<Notifications notifications={[...initial]} />);
+        expect(screen.getAllByRole('listitem').length).toBe(2);
+      });
+
+      test('re-renders if notifications length changes', () => {
+        const initial = [
+          { id: 1, type: 'default', value: 'Test 1' },
+          { id: 2, type: 'urgent', value: 'Test 2' },
+        ];
+        const { rerender } = render(<Notifications notifications={initial} />);
+        expect(screen.getAllByRole('listitem').length).toBe(2);
+        rerender(<Notifications notifications={[...initial, { id: 3, type: 'urgent', value: 'Test 3' }]} />);
+        expect(screen.getAllByRole('listitem').length).toBe(3);
+      });
+});
