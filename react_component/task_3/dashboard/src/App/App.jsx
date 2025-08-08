@@ -7,11 +7,14 @@ import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
 import { getLatestNotification } from "../utils/utils";
 
 class App extends React.Component {
   static defaultProps = {
     logOut: () => {},
+    isLoggedIn: false,
   };
 
   handleKeyDown = (e) => {
@@ -30,7 +33,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn = false } = this.props;
+    const { isLoggedIn } = this.props;
 
     const notificationsList = [
       {
@@ -65,13 +68,12 @@ class App extends React.Component {
           <img className='holberton-logo' src={holbertonLogo} alt='holberton logo' />
           <h1>School Dashboard</h1>
         </div>
-        <div className='App-body'>
-          {isLoggedIn ? (
-            <CourseList courses={coursesList} />
-          ) : (
-            <Login />
-          )}
-        </div>
+        <BodySectionWithMarginBottom title={isLoggedIn ? 'Course list' : 'Log in to continue'}>
+          {isLoggedIn ? <CourseList courses={coursesList} /> : <Login />}
+        </BodySectionWithMarginBottom>
+        <BodySection title="News from the School">
+          <p>Holberton School News goes here</p>
+        </BodySection>
         <div className='App-footer'>
           <p>Copyright {getCurrentYear()} - {getFooterCopy()}</p>
         </div>

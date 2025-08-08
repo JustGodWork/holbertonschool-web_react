@@ -71,3 +71,23 @@ test('calls alert with correct message when Ctrl+H is pressed', () => {
     expect(alertMock).toHaveBeenCalledWith('Logging you out');
     alertMock.mockRestore();
 });
+
+describe('App component', () => {
+  test('displays Course list title above CourseList when isLoggedIn is true', () => {
+    render(<App isLoggedIn={true} />);
+    expect(screen.getByText(/course list/i)).toBeInTheDocument();
+    expect(screen.getByText(/course list/i).nextSibling).toBeInstanceOf(HTMLElement);
+  });
+
+  test('displays Log in to continue title above Login when isLoggedIn is false', () => {
+    render(<App isLoggedIn={false} />);
+    expect(screen.getByText(/log in to continue/i)).toBeInTheDocument();
+    expect(screen.getByText(/log in to continue/i).nextSibling).toBeInstanceOf(HTMLElement);
+  });
+
+  test('displays News from the School title and news paragraph', () => {
+    render(<App />);
+    expect(screen.getByText(/news from the school/i)).toBeInTheDocument();
+    expect(screen.getByText(/holberton school news goes here/i)).toBeInTheDocument();
+  });
+});
