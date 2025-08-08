@@ -1,43 +1,48 @@
 import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import CourseListRow from './CourseListRow';
-import './CourseList.css';
 import WithLogging from '../HOC/WithLogging';
+
+const styles = StyleSheet.create({
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    marginTop: '20px',
+  },
+  th: {
+    border: '1px solid #ccc',
+    padding: '8px',
+    background: '#deb5b545',
+  },
+  td: {
+    border: '1px solid #ccc',
+    padding: '8px',
+    background: '#f5f5f5ab',
+  },
+});
 
 class CourseList extends React.Component {
     render() {
         const { courses = [] } = this.props;
 
-        if (courses.length === 0) {
-            return (
-                <div className='CourseListContainer'>
-                    <table id="CourseList">
-                        <tbody>
-                            <CourseListRow textFirstCell="No course available yet" />
-                        </tbody>
-                    </table>
-                </div>
-            );
-        }
-
         return (
             <div className='CourseListContainer'>
-                <table id="CourseList">
+                <table className={css(styles.table)} id="CourseList">
                     <thead>
-                        <CourseListRow textFirstCell="Available courses" isHeader={true} />
-                        <CourseListRow
-                            textFirstCell="Course name"
-                            textSecondCell="Credit"
-                            isHeader={true}
-                        />
+                        <CourseListRow isHeader={true} textFirstCell="Course name" textSecondCell="Credit" />
                     </thead>
                     <tbody>
-                        {courses.map(course => (
-                            <CourseListRow
-                                key={course.id}
-                                textFirstCell={course.name}
-                                textSecondCell={course.credit.toString()}
-                            />
-                        ))}
+                        {courses.length === 0 ? (
+                            <CourseListRow textFirstCell="No course available yet" />
+                        ) : (
+                            courses.map(course => (
+                                <CourseListRow
+                                    key={course.id}
+                                    textFirstCell={course.name}
+                                    textSecondCell={course.credit}
+                                />
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

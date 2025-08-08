@@ -1,4 +1,14 @@
 import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
+
+const styles = StyleSheet.create({
+  default: {
+    color: 'blue',
+  },
+  urgent: {
+    color: 'red',
+  },
+});
 
 class NotificationItem extends React.PureComponent {
   handleClick = () => {
@@ -10,12 +20,7 @@ class NotificationItem extends React.PureComponent {
 
   render() {
     const { type = 'default', html, value } = this.props;
-    const colors = {
-      urgent: 'red',
-      default: 'blue'
-    };
-
-    const color = colors[type];
+    const styleClass = type === 'urgent' ? styles.urgent : styles.default;
 
     if (html) {
       return (
@@ -23,7 +28,7 @@ class NotificationItem extends React.PureComponent {
           data-notification-type={type}
           onClick={this.handleClick}
           dangerouslySetInnerHTML={{ __html: html }}
-          style={{ color }}
+          className={css(styleClass)}
         />
       );
     }
@@ -32,7 +37,7 @@ class NotificationItem extends React.PureComponent {
       <li
         data-notification-type={type}
         onClick={this.handleClick}
-        style={{ color }}
+        className={css(styleClass)}
       >
         {value}
       </li>

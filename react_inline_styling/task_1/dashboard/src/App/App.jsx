@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import holbertonLogo from '../assets/holberton-logo.jpg';
-import '../App/App.css';
 import { getCurrentYear, getFooterCopy } from '../utils/utils';
 import Notifications from '../Notifications/Notifications';
 import Header from '../Header/Header';
@@ -10,6 +10,27 @@ import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import { getLatestNotification } from "../utils/utils";
+
+const styles = StyleSheet.create({
+  appBody: {
+    padding: '40px 30px',
+    minHeight: '200px',
+  },
+  appFooter: {
+    width: '100%',
+    borderTop: '3px solid #e1003c',
+    textAlign: 'center',
+    position: 'fixed',
+    bottom: 0,
+    background: '#fff',
+    padding: '15px 0',
+  },
+  appFooterP: {
+    margin: 0,
+    fontSize: '1rem',
+    color: '#333',
+  },
+});
 
 class App extends React.Component {
   static defaultProps = {
@@ -74,8 +95,8 @@ class App extends React.Component {
         <BodySection title="News from the School">
           <p>Holberton School News goes here</p>
         </BodySection>
-        <div className='App-footer'>
-          <p>Copyright {getCurrentYear()} - {getFooterCopy()}</p>
+        <div className={css(styles.appFooter)}>
+          <p className={css(styles.appFooterP)}>Copyright {getCurrentYear()} - {getFooterCopy()}</p>
         </div>
       </Fragment>
     );
