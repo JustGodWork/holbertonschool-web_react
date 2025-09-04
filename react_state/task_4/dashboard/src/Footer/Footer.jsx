@@ -1,23 +1,23 @@
-import { newContext } from "../Context/context";
-import React, { useContext } from "react";
-
-import { getCurrentYear, getFooterCopy } from "../utils/utils"
+import React, { useContext } from 'react';
+import { getCurrentYear, getFooterCopy } from '../utils/utils';
+import { newContext } from '../Context/context';
 
 function Footer() {
-	const { user } = useContext(newContext);
+  const context = useContext(newContext);
+  const user = context && context.user ? context.user : { isLoggedIn: false };
 
-	return (
-		<div className="App-footer">
-			<p>
-				Copyright {getCurrentYear()} - {getFooterCopy(false)}
-			</p>
-			{user.isLoggedIn && (
-				<p>
-					<a href='#contact'>Contact us</a>
-				</p>
-			)}
-		</div>
-	);
+  const shouldShowContact = user && user.isLoggedIn === true;
+
+  return (
+    <footer className='App-footer'>
+      <p>Copyright {getCurrentYear()} {getFooterCopy()}</p>
+      {shouldShowContact && (
+        <p>
+          <a href="#" aria-label="Contact us link">Contact us</a>
+        </p>
+      )}
+    </footer>
+  );
 }
 
 export default Footer;

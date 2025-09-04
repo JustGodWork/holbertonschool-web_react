@@ -1,20 +1,27 @@
 import { getCurrentYear, getFooterCopy, getLatestNotification } from "./utils";
 
-describe("utils.js test", () => {
-  const currentYear = new Date().getFullYear();
-  expect(getCurrentYear()).toBe(currentYear);
-});
+describe('Utils functions', () => {
+    describe('getCurrentYear', () => {
+        it('should return the current year', () => {
+            const currentYear = new Date().getFullYear();
+            expect(getCurrentYear()).toBe(currentYear);
+        });
+    });
 
-test("getFooterCopy returns the correct string when isIndex is true", () => {
-  expect(getFooterCopy(true)).toBe("Holberton School");
-});
+    describe('getFooterCopy', () => {
+        it('Should return "Holberton School" when argument is true', () => {
+            expect(getFooterCopy(true)).toBe('Holberton School');
+        });
 
-test("getFooterCopy returns the correct string when isIndex is false", () => {
-  expect(getFooterCopy(false)).toBe("Holberton School main dashboard");
-});
+        it('Should return "Holberton School main dashboard" when argument is false', () => {
+            expect(getFooterCopy(false)).toBe('Holberton School main dashboard');
+        });
+    });
 
-test("getLatestNotification returns the expected string", () => {
-  expect(getLatestNotification()).toBe(
-    "<strong>Urgent requirement</strong> - complete by EOD"
-  );
+    describe('getLatestNotification', () => {
+        it('Should return the correct notification string', () => {
+            const expectedString = '<strong>Urgent requirement</strong> - complete by EOD';
+            expect(getLatestNotification()).toBe(expectedString);
+        });
+    });
 });

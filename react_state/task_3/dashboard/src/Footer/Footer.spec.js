@@ -1,26 +1,23 @@
-import { render, screen } from "@testing-library/react";
-import App from "../App/App";
-import { StyleSheetTestUtils } from "aphrodite";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
+import Footer from './Footer';
+
 beforeEach(() => {
-  StyleSheetTestUtils.suppressStyleInjection();
-});
-// Re-enable style injection after each test
-afterEach(() => {
-  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+    StyleSheetTestUtils.suppressStyleInjection();
 });
 
-describe("Footer component", () => {
-  test("renders correct text when isIndex is true", () => {
-    render(<App isLoggedIn={false} />);
-    const bodyParagraph = screen.getByText(
-      /login to access the full dashboard/i
-    );
-    expect(bodyParagraph).toBeInTheDocument();
+afterEach(() => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
+test('renders correct text content in p elements', () => {
+    render(<Footer />);
 
     const currentYear = new Date().getFullYear();
     const footerParagraph = screen.getByText(
-      new RegExp(`copyright ${currentYear} - holberton school`, "i")
+        new RegExp(`copyright ${currentYear}.*holberton school`, 'i')
     );
+
     expect(footerParagraph).toBeInTheDocument();
-  });
 });

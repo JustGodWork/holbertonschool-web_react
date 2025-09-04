@@ -1,26 +1,30 @@
-import { render, screen } from "@testing-library/react";
-import Header from "./Header";
-import { StyleSheetTestUtils } from "aphrodite";
+import React from 'react';
+import Header from './Header';
+import { render, screen } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
 
 beforeEach(() => {
-  StyleSheetTestUtils.suppressStyleInjection();
+    StyleSheetTestUtils.suppressStyleInjection();
 });
 
-// Re-enable style injection after each test
 afterEach(() => {
-  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
 });
 
-describe("Header component", () => {
-  test('renders the heading with text "School dashboard"', () => {
+test('renders img element', () => {
     render(<Header />);
-    const heading = screen.getByRole("heading", { name: /school dashboard/i });
-    expect(heading).toBeInTheDocument();
-  });
 
-  test("render Holberton logo", () => {
+    const imgElement = screen.getByAltText(/holberton logo/i);
+
+    expect(imgElement).toBeInTheDocument();
+});
+
+test('Renders h1 element with "School Dashboard text"', () => {
     render(<Header />);
-    const logo = screen.getByAltText(/holberton logo/i);
-    expect(logo).toBeInTheDocument();
-  });
+
+    const headingElement = screen.getByRole('heading', {
+        name: /school dashboard/i
+    });
+
+    expect(headingElement).toBeInTheDocument();
 });

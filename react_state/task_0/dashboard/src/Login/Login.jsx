@@ -1,108 +1,70 @@
-import { Component } from "react";
-import { StyleSheet, css } from "aphrodite";
+import React from 'react';
+import { StyleSheet, css } from 'aphrodite';
+import { useRef } from 'react';
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      email: '',
-      password: '',
-      enableSubmit: false
-    };
-  }
+function Login() {
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
 
-  handleLoginSubmit = (event) => {
-    event.preventDefault();
-    this.setState({ isLoggedIn: true });
-    console.log('Logged in successfully', this.state.email)
-  }
-
-  handleChangeEmail = (event) => {
-    const email = event.target.value;
-    this.setState({ email }, this.validateForm);
-  };
-
-  handleChangePassword = (event) => {
-    const password = event.target.value;
-    this.setState({ password }, this.validateForm)
-  };
-
-  validateForm = () => {
-    const { email, password } = this.state;
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const passwordValid = password.length >= 8;
-    this.setState({ enableSubmit: emailValid && passwordValid })
-  };
-
-  render() {
-    const { email, password, enableSubmit, isLoggedIn } = this.state;
-
-    if (isLoggedIn) {
-      return (
-        <div className={css(styles.body)}>
-          <p>Welcome back, {email}!</p>
-        </div>
-      );
-    }
+    const styles = StyleSheet.create({
+        AppBody: {
+            padding: '2rem',
+            flex: 1
+        },
+        AppBodyP: {
+            marginBottom: '1rem'
+        },
+        form: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            gap: '1rem',
+            '@media (max-width: 900px)': {
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: '0.5rem'
+            }
+        },
+        formInput: {
+            padding: '0 0.25rem'
+        },
+        formButton: {
+            padding: '0 0.25rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }
+    });
 
     return (
-      <div className={css(styles.body)}>
-        <p>Login to access the full dashboard</p>
+        <div className={css(styles.AppBody)}>
+            <p className={css(styles.AppBodyP)}>Login to access the full dashboard</p>
 
-        <form className={css(styles.form)} onSubmit={this.handleLoginSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input
-            className={css(styles.input)}
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={this.handleChangeEmail}
-          />
+            <form className={css(styles.form)}>
+                <label htmlFor='email' onClick={() => emailRef.current && emailRef.current.focus()}>Email:</label>
+                <input
+                    id='email'
+                    name='email'
+                    type='email'
+                    ref={emailRef}
+                    className={css(styles.formInput)}
+                />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            className={css(styles.input)}
-            type="password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={this.handleChangePassword}
-          />
+                <label htmlFor='password' onClick={() => passwordRef.current && passwordRef.current.focus()}>Password:</label>
+                <input
+                    id='password'
+                    name='password'
+                    type='password'
+                    role="textbox"
+                    ref={passwordRef}
+                    className={css(styles.formInput)}
+                />
 
-          <input
-            type="submit"
-            value="OK"
-            disabled={!enableSubmit}
-            className={css(styles.submit)}
-          />
-        </form>
-      </div>
+                <button type='submit' className={css(styles.formButton)}>OK</button>
+            </form>
+        </div>
     );
-  }
 }
-
-const styles = StyleSheet.create({
-  body: {
-    marginTop: "100px",
-    textAlign: "center",
-  },
-  input: {
-    margin: "0 5px",
-  },
-  submit: {
-    marginTop: "10px",
-    cursor: "pointer",
-  },
-  form: {
-    '@media (max-width: 900px)': {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      gap: '0.5rem'
-    }
-  }
-});
 
 export default Login;

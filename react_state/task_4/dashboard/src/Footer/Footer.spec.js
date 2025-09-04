@@ -1,21 +1,53 @@
-import { render, screen } from "@testing-library/react";
-import Footer from "./Footer";
-import { newContext } from "../Context/context";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { StyleSheetTestUtils } from 'aphrodite';
+import Footer from './Footer';
+import { newContext, defaultUser } from '../Context/context';
 
-test("Contact us link not shown when logged out", () => {
-  render(
-    <newContext.Provider value={{ user: { isLoggedIn: false } }}>
-      <Footer />
-    </newContext.Provider>
-  );
-  expect(screen.queryByText(/contact us/i)).not.toBeInTheDocument();
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
 });
 
-test("Contact us link shown when logged in", () => {
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
+
+test('renders correct text content in p elements', () => {
+  render(<Footer />);
+
+  const currentYear = new Date().getFullYear();
+  const footerParagraph = screen.getByText(
+    new RegExp(`copyright ${currentYear}.*holberton school`, 'i')
+  );
+
+  expect(footerParagraph).toBeInTheDocument();
+});
+
+test('does NOT display "Contact us" link when user is logged out', () => {
+  const value = { user: { ...defaultUser }, logOut: () => { } };
+
   render(
-    <newContext.Provider value={{ user: { isLoggedIn: true } }}>
+    <newContext.Provider value={value}>
       <Footer />
     </newContext.Provider>
   );
-  expect(screen.getByText(/contact us/i)).toBeInTheDocument();
+
+  const contactLink = screen.queryByRole('link', { name: /contact us/i });
+  expect(contactLink).not.toBeInTheDocument();
+});
+
+test('displays "Contact us" link when user is logged in', () => {
+  const value = {
+    user: { email: 'user@example.com', password: 'strongpass', isLoggedIn: true },
+    logOut: () => { },
+  };
+
+  render(
+    <newContext.Provider value={value}>
+      <Footer />
+    </newContext.Provider>
+  );
+
+  const contactLink = screen.getByRole('link', { name: /contact us/i });
+  expect(contactLink).toBeInTheDocument();
 });

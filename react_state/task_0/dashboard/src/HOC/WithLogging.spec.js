@@ -43,7 +43,6 @@ test('logs component unmount message', () => {
     const WrappedComponent = WithLogging(MockApp);
     const { unmount } = render(<WrappedComponent />);
 
-    // Clear previous calls
     consoleSpy.mockClear();
 
     unmount();
@@ -53,7 +52,6 @@ test('logs component unmount message', () => {
 
 test('uses Component as default name when component has no name', () => {
     const AnonymousComponent = () => <div>Anonymous</div>;
-    // Supprimer le nom pour simuler un composant anonyme
     Object.defineProperty(AnonymousComponent, 'name', { value: '' });
 
     const WrappedComponent = WithLogging(AnonymousComponent);

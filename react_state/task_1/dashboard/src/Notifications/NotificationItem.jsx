@@ -1,98 +1,72 @@
-import React, { PureComponent, createRef } from "react";
-import { StyleSheet, css } from "aphrodite";
+import React, { PureComponent, createRef } from 'react';
+import { StyleSheet, css } from 'aphrodite';
+
+const styles = StyleSheet.create({
+    default: {
+        color: 'blue',
+    },
+    urgent: {
+        color: 'red',
+    }
+});
 
 class NotificationItem extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.liRef = createRef();
-  }
+    constructor(props) {
+        super(props);
+        this.liRef = createRef();
+    }
 
-  componentDidMount() {
-    this.updateColor();
-  }
+    handleClick = () => {
+        const { id, markAsRead } = this.props;
+        if (markAsRead) {
+            markAsRead(id);
+        }
+    }
 
-  componentDidUpdate() {
-    this.updateColor();
-  }
-
-  updateColor = () => {
-    const { type = "default" } = this.props;
-    const colors = {
-      urgent: "red",
-      default: "blue",
+    containsHTML = (str) => {
+        return typeof str === 'string' && /<\/?[a-z][\s\S]*>/i.test(str);
     };
 
-    const color = colors[type];
+    render() {
+        const { type = 'default', html, value } = this.props;
 
-    if (this.liRef.current) {
-      this.liRef.current.style.color = color;
-      if (!this.liRef.current.style._values) {
-        this.liRef.current.style._values = {};
-      }
-      this.liRef.current.style._values.color = color;
+        const styleClass = type === 'urgent' ? styles.urgent : styles.default;
+
+        if (html) {
+            return (
+                <li
+                    ref={this.liRef}
+                    className={css(styleClass)}
+                    data-notification-type={type}
+                    dangerouslySetInnerHTML={html}
+                    onClick={this.handleClick}
+                />
+            );
+        }
+
+        if (value && this.containsHTML(value)) {
+            return (
+                <li
+                    ref={this.liRef}
+                    className={css(styleClass)}
+                    data-notification-type={type}
+                    dangerouslySetInnerHTML={{ __html: value }}
+                    onClick={this.handleClick}
+                />
+            );
+        }
+
+        return (
+            <li
+                ref={this.liRef}
+                className={css(styleClass)}
+                data-notification-type={type}
+                onClick={this.handleClick}
+            >
+                {value}
+            </li>
+        );
     }
-  };
-
-  handleClick = () => {
-    const { id, markAsRead } = this.props;
-    if (markAsRead) {
-      markAsRead(id);
-    }
-  };
-
-  containsHTML = (str) => {
-    return typeof str === "string" && /<\/?[a-z][\s\S]*>/i.test(str);
-  };
-
-  render() {
-    const { type = "default", html, value } = this.props;
-
-    if (html) {
-      return (
-        <li
-          className={css(style.t)}
-          ref={this.liRef}
-          data-notification-type={type}
-          dangerouslySetInnerHTML={html}
-          onClick={this.handleClick}
-        />
-      );
-    }
-
-    if (value && this.containsHTML(value)) {
-      return (
-        <li
-          ref={this.liRef}
-          data-notification-type={type}
-          dangerouslySetInnerHTML={{ __html: value }}
-          onClick={this.handleClick}
-        />
-      );
-    }
-
-    return (
-      <li
-        ref={this.liRef}
-        data-notification-type={type}
-        onClick={this.handleClick}
-      >
-        {value}
-      </li>
-    );
-  }
 }
-
-const style = StyleSheet.create({
-  t: {
-    border: "none",
-    '@media (max-width: 900px)': {
-      width: "100%",
-      height: "100%",
-      padding: '10px 8px',
-      border: 'solid black 1px',
-      fontSize: "20px",
-    },
-  },
-});
 
 export default NotificationItem;
