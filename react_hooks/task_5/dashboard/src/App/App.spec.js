@@ -3,47 +3,18 @@ import App from './App.jsx';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StyleSheetTestUtils } from 'aphrodite';
-import mockAxios from 'jest-mock-axios';
 
 describe('App Component Tests', () => {
   beforeEach(() => {
     StyleSheetTestUtils.suppressStyleInjection();
-    mockAxios.reset();
-
-    // Mock axios responses
-    mockAxios.get.mockImplementation((url) => {
-      if (url === '/notifications.json') {
-        return Promise.resolve({
-          data: [
-            { id: 1, type: 'default', value: 'New course available' },
-            { id: 2, type: 'urgent', value: 'New resume available' },
-            { id: 3, type: 'urgent', html: { __html: 'Urgent requirement' } }
-          ]
-        });
-      } else if (url === '/courses.json') {
-        return Promise.resolve({
-          data: [
-            { id: 1, name: 'ES6', credit: 60 },
-            { id: 2, name: 'Webpack', credit: 20 },
-            { id: 3, name: 'React', credit: 40 }
-          ]
-        });
-      }
-      return Promise.reject(new Error('Unknown URL'));
-    });
   });
 
   afterEach(() => {
     StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-    mockAxios.reset();
   });
 
-  test('Renders Notifications component', async () => {
+  test('Renders Notifications component', () => {
     render(<App />);
-
-    // Wait for axios calls to resolve
-    await new Promise(resolve => setTimeout(resolve, 0));
-
     const notificationTitle = screen.getByText(/your notifications/i);
     expect(notificationTitle).toBeInTheDocument();
   });
@@ -131,9 +102,6 @@ describe('App Component Tests', () => {
     render(<App />);
     const user = userEvent.setup();
 
-    // Wait for axios calls to resolve
-    await new Promise(resolve => setTimeout(resolve, 0));
-
     const menuItem = screen.getByText(/your notifications/i);
     await user.click(menuItem);
 
@@ -152,9 +120,6 @@ describe('App Component Tests', () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
     render(<App />);
     const user = userEvent.setup();
-
-    // Wait for axios calls to resolve
-    await new Promise(resolve => setTimeout(resolve, 0));
 
     const menuItem = screen.getByText(/your notifications/i);
     await user.click(menuItem);
