@@ -122,18 +122,17 @@ const App = () => {
   const markNotificationAsRead = useCallback((id) => {
     console.log(`Notification ${id} has been marked as read`);
 
-    const current = notifications;
-    const filtered = [];
-
-    for (let i = 0; i < current.length; i += 1) {
-      const item = current[i];
-      if (item.id !== id) {
-        filtered.push(item);
+    setNotifications(prev => {
+      const filtered = [];
+      for (let i = 0; i < prev.length; i += 1) {
+        const item = prev[i];
+        if (item.id !== id) {
+          filtered.push(item);
+        }
       }
-    }
-
-    setNotifications(filtered);
-  }, [notifications]);
+      return filtered;
+    });
+  }, []);
 
   const contextValue = React.useMemo(() => ({
     user,
